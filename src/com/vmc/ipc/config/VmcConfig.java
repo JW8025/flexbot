@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public class VmcConfig {
+public class VmcConfig {//vmc配置
     public final static String TAG = "VmcConfig";
     
     public final static boolean DEFAULT_ISSTOREREMOTE = false;
-    public final static String DEFAULT_RESOLUTION = "1280,720";
-    public final static int DEFAULT_DECODEMODE = 1;
+    public final static String DEFAULT_RESOLUTION = "1280,720";//默认分辨率
+    public final static int DEFAULT_DECODEMODE = 1;//默认解码模式
     public final static boolean DEFAULT_AUTOCONNECT2AVAILABLEAP = false;
     public final static String DEFAULT_LASTAVAILABLEIPCAP = "";
     

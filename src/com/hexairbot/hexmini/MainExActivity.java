@@ -54,7 +54,7 @@ public class MainExActivity extends FragmentActivity implements
 
 	private static final String TAG = "MainExActivity";
 	public static final int REQUEST_ENABLE_BT = 1;
-	private static final int DIALOG_WIFI_DISABLE = 1000;
+//	private static final int DIALOG_WIFI_DISABLE = 1000;
 
 	private SettingsDialog settingsDialog;
 	private HudExViewController hudVC;
@@ -181,15 +181,15 @@ public class MainExActivity extends FragmentActivity implements
 		}
 	}
 
-	private boolean checkWifiEnable() {
-		WifiManager wifiManager = (WifiManager) this
-				.getSystemService(Context.WIFI_SERVICE);
-		boolean wifiEnabled = wifiManager.isWifiEnabled();
-		if (!wifiEnabled) {
-			showDialogWhenWifiCheckFail();
-		}
-		return wifiEnabled;
-	}
+//	private boolean checkWifiEnable() {
+//		WifiManager wifiManager = (WifiManager) this
+//				.getSystemService(Context.WIFI_SERVICE);
+//		boolean wifiEnabled = wifiManager.isWifiEnabled();
+//		if (!wifiEnabled) {
+//			showDialogWhenWifiCheckFail();
+//		}
+//		return wifiEnabled;
+//	}
 
 	public void initBroadcastReceiver() {
 		// IntentFilter filter = new IntentFilter();
@@ -227,28 +227,28 @@ public class MainExActivity extends FragmentActivity implements
 		}
 	};
 
-	private void showDialogWhenWifiCheckFail() {
-		IpcAlertDialog dialog = new IpcAlertDialog();
-		dialog.setTitle(R.string.app_name);
-		dialog.setMessage(R.string.wifi_disabled);
-		dialog.setPbtn_text(R.string.enable_wifi);
-		dialog.setHandler(new IpcAlertDialogHandler() {
-
-			@Override
-			public void positive() {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent("android.settings.WIFI_SETTINGS");
-				MainExActivity.this.startActivity(intent);
-			}
-
-			@Override
-			public void negtive() {
-				// TODO Auto-generated method stub
-
-			}
-		});
-		dialog.show(getSupportFragmentManager(), "wificheck");
-	}
+//	private void showDialogWhenWifiCheckFail() {
+//		IpcAlertDialog dialog = new IpcAlertDialog();
+//		dialog.setTitle(R.string.app_name);
+//		dialog.setMessage(R.string.wifi_disabled);
+//		dialog.setPbtn_text(R.string.enable_wifi);
+//		dialog.setHandler(new IpcAlertDialogHandler() {
+//
+//			@Override
+//			public void positive() {
+//				// TODO Auto-generated method stub
+//				Intent intent = new Intent("android.settings.WIFI_SETTINGS");
+//				MainExActivity.this.startActivity(intent);
+//			}
+//
+//			@Override
+//			public void negtive() {
+//				// TODO Auto-generated method stub
+//
+//			}
+//		});
+//		dialog.show(getSupportFragmentManager(), "wificheck");
+//	}
 
 	private BroadcastReceiver connectStateChangedReceiver = new BroadcastReceiver() {
 
@@ -279,44 +279,44 @@ public class MainExActivity extends FragmentActivity implements
 			} else if (v == btnSetting) {
 				// startSettingsActivity();
 			} else if (v == btnVideos) {
-				startMediaActivity(MediaUtil.MEDIA_TYPE_VIDEO);
+//				startMediaActivity(MediaUtil.MEDIA_TYPE_VIDEO);
 			} else if (v == btnPictures) {
-				startMediaActivity(MediaUtil.MEDIA_TYPE_IMAGE);
+//				startMediaActivity(MediaUtil.MEDIA_TYPE_IMAGE);
 			}
 		}
 	};
 
-	private void startMediaActivity(int type) {
-		// if(!VmcConfig.getInstance().isStoreRemote()) {
-		if (false) {
-			if (MediaUtil.hasIpcMediaFile(type)) {
-				// if(true) {
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				if (type == MediaUtil.MEDIA_TYPE_IMAGE) {
-					intent.setType("vnd.android.cursor.dir/image");// ͼƬ�б�
-				} else {
-					intent.setType("vnd.android.cursor.dir/video");// ��Ƶ�б�
-				}
-				intent.putExtra("type", type);
-				intent.setClass(this, GalleryActivity.class);
-				this.startActivity(intent);
-			} else {
-				DebugHandler.logWithToast(this,
-						"You don't have any multimedia files.", 2000);
-			}
-		} else {
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			if (type == MediaUtil.MEDIA_TYPE_IMAGE) {
-				intent.setType("vnd.android.cursor.dir/image");
-			} else {
-				intent.setType("vnd.android.cursor.dir/video");
-			}
-			intent.putExtra("type", type);
-			intent.putExtra("browser_type", GalleryActivity.BROWSER_TYPE_REMOTE);
-			intent.setClass(this, GalleryActivity.class);
-			this.startActivity(intent);
-		}
-	}
+//	private void startMediaActivity(int type) {
+//		// if(!VmcConfig.getInstance().isStoreRemote()) {
+//		if (false) {
+//			if (MediaUtil.hasIpcMediaFile(type)) {
+//				// if(true) {
+//				Intent intent = new Intent(Intent.ACTION_VIEW);
+//				if (type == MediaUtil.MEDIA_TYPE_IMAGE) {
+//					intent.setType("vnd.android.cursor.dir/image");// ͼƬ�б�
+//				} else {
+//					intent.setType("vnd.android.cursor.dir/video");// ��Ƶ�б�
+//				}
+//				intent.putExtra("type", type);
+//				intent.setClass(this, GalleryActivity.class);
+//				this.startActivity(intent);
+//			} else {
+//				DebugHandler.logWithToast(this,
+//						"You don't have any multimedia files.", 2000);
+//			}
+//		} else {
+//			Intent intent = new Intent(Intent.ACTION_VIEW);
+//			if (type == MediaUtil.MEDIA_TYPE_IMAGE) {
+//				intent.setType("vnd.android.cursor.dir/image");
+//			} else {
+//				intent.setType("vnd.android.cursor.dir/video");
+//			}
+//			intent.putExtra("type", type);
+//			intent.putExtra("browser_type", GalleryActivity.BROWSER_TYPE_REMOTE);
+//			intent.setClass(this, GalleryActivity.class);
+//			this.startActivity(intent);
+//		}
+//	}
 
 	private void startWebHomeActivity() {
 		// Intent intent = new Intent();
@@ -345,13 +345,13 @@ public class MainExActivity extends FragmentActivity implements
 		dumpVideoCapabilitiesInfo();
 	}
 
-	private void refreshWifiInfo() {
-		WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-		if (ssid != null && wifiInfo != null) {
-			ssid.setText(wifiInfo.getSSID());
-		}
-	}
+//	private void refreshWifiInfo() {
+//		WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+//		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+//		if (ssid != null && wifiInfo != null) {
+//			ssid.setText(wifiInfo.getSSID());
+//		}
+//	}
 
 	@SuppressLint("NewApi")
 	private void dumpVideoCapabilitiesInfo() {
