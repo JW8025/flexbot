@@ -48,8 +48,9 @@ import com.vmc.ipc.service.OnIpcConnectChangedListener;
 import com.vmc.ipc.util.DebugHandler;
 import com.vmc.ipc.util.MediaUtil;
 
+// OnIpcConnectChangedListener
 public class MainExActivity extends FragmentActivity implements
-		OnIpcConnectChangedListener, SettingsDialogDelegate, OnTouchListener,
+		SettingsDialogDelegate, OnTouchListener,
 		HudViewControllerDelegate {
 
 	private static final String TAG = "MainExActivity";
@@ -99,7 +100,7 @@ public class MainExActivity extends FragmentActivity implements
 
 		Intent intent = new Intent();
 		intent.setClass(this, IpcControlService.class);
-		this.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+//		this.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
 		Intent apintent = new Intent();
 		apintent.setAction(ApConnectService.ACTION_CHECK_AND_ENABLE_WIFI);
@@ -137,10 +138,10 @@ public class MainExActivity extends FragmentActivity implements
 		 * showToast("Spinner1: unselected"); } }); } else {
 		 * serverSelect.setVisibility(View.GONE); } // //////////
 		 */
-		ConnectStateManager mConnectStateManager = ConnectStateManager.getInstance(this.getApplication());
-		mConnectStateManager.init();
-		mConnectStateManager.connect("rtmp://192.168.1.1/live/stream");
-		valiateConnectState();
+//		ConnectStateManager mConnectStateManager = ConnectStateManager.getInstance(this.getApplication());
+//		mConnectStateManager.init();
+//		mConnectStateManager.connect("rtmp://192.168.1.1/live/stream");
+//		valiateConnectState();
 		// setContentView(R.layout.hud_view_controller_framelayout);
 		// splash = (LinearLayout) findViewById(R.id.splash);
 		//
@@ -152,34 +153,34 @@ public class MainExActivity extends FragmentActivity implements
 		hudVC.onCreate();
 		hudVC.onResume();
 		
-		initBroadcastReceiver();
+//		initBroadcastReceiver();
 	}
 
-	private void connectIPC(String address) {
-		ConnectStateManager mConnectStateManager = ConnectStateManager
-				.getInstance(this.getApplication());
-		mConnectStateManager.connect(address);
-	}
+//	private void connectIPC(String address) {
+//		ConnectStateManager mConnectStateManager = ConnectStateManager
+//				.getInstance(this.getApplication());
+//		mConnectStateManager.connect(address);
+//	}
 
-	private void valiateConnectState() {
-		// boolean wifiEnabled = checkWifiEnable();
-		// if (!wifiEnabled)
-		// return;
-		String reason = null;
-		if (controlService == null) {
-			reason = "can not control your device,because controlService is null.";
-		} else {
-			int state = controlService.getConnectStateManager().getState();
-			if (state == ConnectStateManager.CONNECTING
-					|| state == ConnectStateManager.DISCONNECTED) {
-				reason = "your phone was not connect to the device.";
-			}
-		}
-		if (reason != null) {
-			//DebugHandler.logWithToast(this, reason, 2000);
-			return;
-		}
-	}
+//	private void valiateConnectState() {
+//		// boolean wifiEnabled = checkWifiEnable();
+//		// if (!wifiEnabled)
+//		// return;
+//		String reason = null;
+//		if (controlService == null) {
+//			reason = "can not control your device,because controlService is null.";
+//		} else {
+//			int state = controlService.getConnectStateManager().getState();
+//			if (state == ConnectStateManager.CONNECTING
+//					|| state == ConnectStateManager.DISCONNECTED) {
+//				reason = "your phone was not connect to the device.";
+//			}
+//		}
+//		if (reason != null) {
+//			//DebugHandler.logWithToast(this, reason, 2000);
+//			return;
+//		}
+//	}
 
 //	private boolean checkWifiEnable() {
 //		WifiManager wifiManager = (WifiManager) this
@@ -191,41 +192,41 @@ public class MainExActivity extends FragmentActivity implements
 //		return wifiEnabled;
 //	}
 
-	public void initBroadcastReceiver() {
-		// IntentFilter filter = new IntentFilter();
-		// filter.addAction(WifiManager.RSSI_CHANGED_ACTION);
-		// filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-		// filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-		// this.registerReceiver(connectStateChangedReceiver, filter);
-		IntentFilter dd = new IntentFilter();
-		dd.addAction(ConnectStateManager.ACTION_CONNECT_STATE_CHANGED);
-		LocalBroadcastManager.getInstance(this).registerReceiver(
-				connectStateChangedReceiver, dd);
-	}
+//	public void initBroadcastReceiver() {
+//		// IntentFilter filter = new IntentFilter();
+//		// filter.addAction(WifiManager.RSSI_CHANGED_ACTION);
+//		// filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//		// filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+//		// this.registerReceiver(connectStateChangedReceiver, filter);
+//		IntentFilter dd = new IntentFilter();
+//		dd.addAction(ConnectStateManager.ACTION_CONNECT_STATE_CHANGED);
+//		LocalBroadcastManager.getInstance(this).registerReceiver(
+//				connectStateChangedReceiver, dd);
+//	}
 
-	public void destroyBroadcastReceiver() {
-		LocalBroadcastManager.getInstance(this).unregisterReceiver(
-				connectStateChangedReceiver);
-	}
+//	public void destroyBroadcastReceiver() {
+//		LocalBroadcastManager.getInstance(this).unregisterReceiver(
+//				connectStateChangedReceiver);
+//	}
 
-	private ServiceConnection mConnection = new ServiceConnection() {
-
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			controlService = ((IpcControlService.LocalBinder) service)
-					.getService();
-			controlService.getConnectStateManager().addConnectChangedListener(
-					MainExActivity.this);
-			// onDroneServiceConnected();
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			controlService.getConnectStateManager()
-					.removeConnectChangedListener(MainExActivity.this);
-			controlService = null;
-		}
-	};
+//	private ServiceConnection mConnection = new ServiceConnection() {
+//
+//		@Override
+//		public void onServiceConnected(ComponentName name, IBinder service) {
+//			controlService = ((IpcControlService.LocalBinder) service)
+//					.getService();
+//			controlService.getConnectStateManager().addConnectChangedListener(
+//					MainExActivity.this);
+//			// onDroneServiceConnected();
+//		}
+//
+//		@Override
+//		public void onServiceDisconnected(ComponentName name) {
+//			controlService.getConnectStateManager()
+//					.removeConnectChangedListener(MainExActivity.this);
+//			controlService = null;
+//		}
+//	};
 
 //	private void showDialogWhenWifiCheckFail() {
 //		IpcAlertDialog dialog = new IpcAlertDialog();
@@ -250,41 +251,41 @@ public class MainExActivity extends FragmentActivity implements
 //		dialog.show(getSupportFragmentManager(), "wificheck");
 //	}
 
-	private BroadcastReceiver connectStateChangedReceiver = new BroadcastReceiver() {
+//	private BroadcastReceiver connectStateChangedReceiver = new BroadcastReceiver() {
+//
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//			String action = intent.getAction();
+//			int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
+//					WifiManager.WIFI_STATE_UNKNOWN);
+//			if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)
+//					&& (state == WifiManager.WIFI_STATE_DISABLED || state == WifiManager.WIFI_STATE_UNKNOWN)) {
+//				//showDialogWhenWifiCheckFail();
+//			} else if (action
+//					.equals(ConnectStateManager.ACTION_CONNECT_STATE_CHANGED)) {
+//				DebugHandler.logd(TAG,
+//						ConnectStateManager.ACTION_CONNECT_STATE_CHANGED);
+//			}
+//			//refreshWifiInfo();
+//		}
+//
+//	};
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String action = intent.getAction();
-			int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
-					WifiManager.WIFI_STATE_UNKNOWN);
-			if (action.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)
-					&& (state == WifiManager.WIFI_STATE_DISABLED || state == WifiManager.WIFI_STATE_UNKNOWN)) {
-				//showDialogWhenWifiCheckFail();
-			} else if (action
-					.equals(ConnectStateManager.ACTION_CONNECT_STATE_CHANGED)) {
-				DebugHandler.logd(TAG,
-						ConnectStateManager.ACTION_CONNECT_STATE_CHANGED);
-			}
-			//refreshWifiInfo();
-		}
-
-	};
-
-	private OnClickListener mOnClickListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			if (v == btnHome) {
-				startWebHomeActivity();
-			} else if (v == btnSetting) {
-				// startSettingsActivity();
-			} else if (v == btnVideos) {
-//				startMediaActivity(MediaUtil.MEDIA_TYPE_VIDEO);
-			} else if (v == btnPictures) {
-//				startMediaActivity(MediaUtil.MEDIA_TYPE_IMAGE);
-			}
-		}
-	};
+//	private OnClickListener mOnClickListener = new OnClickListener() {
+//
+//		@Override
+//		public void onClick(View v) {
+//			if (v == btnHome) {
+//				startWebHomeActivity();
+//			} else if (v == btnSetting) {
+//				// startSettingsActivity();
+//			} else if (v == btnVideos) {
+////				startMediaActivity(MediaUtil.MEDIA_TYPE_VIDEO);
+//			} else if (v == btnPictures) {
+////				startMediaActivity(MediaUtil.MEDIA_TYPE_IMAGE);
+//			}
+//		}
+//	};
 
 //	private void startMediaActivity(int type) {
 //		// if(!VmcConfig.getInstance().isStoreRemote()) {
@@ -318,24 +319,24 @@ public class MainExActivity extends FragmentActivity implements
 //		}
 //	}
 
-	private void startWebHomeActivity() {
-		// Intent intent = new Intent();
-		// intent.setClass(MainActivity.this, WebHomeActivity.class);
-		// this.startActivity(intent);
-
-		String url;
-		int state = ConnectStateManager.getInstance(getApplication())
-				.getState();
-		if (state == ConnectStateManager.CONNECTING
-				|| state == ConnectStateManager.DISCONNECTED) {
-			url = "http://www.vimicro.com.cn";
-		} else {
-			url = "http://192.168.1.1";
-		}
-		Uri u = Uri.parse(url);
-		Intent it = new Intent(Intent.ACTION_VIEW, u);
-		this.startActivity(it);
-	}
+//	private void startWebHomeActivity() {
+//		// Intent intent = new Intent();
+//		// intent.setClass(MainActivity.this, WebHomeActivity.class);
+//		// this.startActivity(intent);
+//
+//		String url;
+//		int state = ConnectStateManager.getInstance(getApplication())
+//				.getState();
+//		if (state == ConnectStateManager.CONNECTING
+//				|| state == ConnectStateManager.DISCONNECTED) {
+//			url = "http://www.vimicro.com.cn";
+//		} else {
+//			url = "http://192.168.1.1";
+//		}
+//		Uri u = Uri.parse(url);
+//		Intent it = new Intent(Intent.ACTION_VIEW, u);
+//		this.startActivity(it);
+//	}
 
 	private void showSystemInfo() {
 		Display wm = this.getWindow().getWindowManager().getDefaultDisplay();
@@ -413,7 +414,7 @@ public class MainExActivity extends FragmentActivity implements
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		
-		destroyBroadcastReceiver();
+//		destroyBroadcastReceiver();
 		
 		Log.e("onDestroy", "");
 
@@ -426,7 +427,7 @@ public class MainExActivity extends FragmentActivity implements
 		hudVC.onDestroy();
 		hudVC = null;
 
-		this.unbindService(mConnection);
+//		this.unbindService(mConnection);
 		Thread destroy = new Thread(new Runnable() {
 
 			@Override
@@ -514,43 +515,43 @@ public class MainExActivity extends FragmentActivity implements
 		Log.e("onStop()", "onStop");
 	}
 
-	@Override
-	public void OnIpcConnected() {
-		// TODO Auto-generated method stub
-		if (connectState != null)
-			connectState.setText("connected");
-		DebugHandler.logWithToast(this,
-				this.getResources().getString(R.string.connect_success), 2000);
-		String[] keys = { "device", "version" };
-		String[] values = { "android", "4.1.2" };
-		ConnectStateManager.getInstance(getApplication()).getIpcProxy()
-				.sendMessage2Server(keys, values);
-	}
+//	@Override
+//	public void OnIpcConnected() {
+//		// TODO Auto-generated method stub
+//		if (connectState != null)
+//			connectState.setText("connected");
+//		DebugHandler.logWithToast(this,
+//				this.getResources().getString(R.string.connect_success), 2000);
+//		String[] keys = { "device", "version" };
+//		String[] values = { "android", "4.1.2" };
+//		ConnectStateManager.getInstance(getApplication()).getIpcProxy()
+//				.sendMessage2Server(keys, values);
+//	}
 
-	@Override
-	public void OnIpcDisConnected() {
-		// TODO Auto-generated method stub
-		if (connectState != null)
-			connectState.setText("disconnected");
-		// long current = System.currentTimeMillis();
-		// if(isStarted && current - lastToastTime > 2000) {
-		// DebugHandler.logWithToast(this,
-		// this.getResources().getString(R.string.connect_fail), 1000);
-		// lastToastTime = current;
-		// }
-	}
+//	@Override
+//	public void OnIpcDisConnected() {
+//		// TODO Auto-generated method stub
+//		if (connectState != null)
+//			connectState.setText("disconnected");
+//		// long current = System.currentTimeMillis();
+//		// if(isStarted && current - lastToastTime > 2000) {
+//		// DebugHandler.logWithToast(this,
+//		// this.getResources().getString(R.string.connect_fail), 1000);
+//		// lastToastTime = current;
+//		// }
+//	}
 
-	@Override
-	public void onIpcPaused() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onIpcResumed() {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void onIpcPaused() {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	@Override
+//	public void onIpcResumed() {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {

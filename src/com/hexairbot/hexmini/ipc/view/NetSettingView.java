@@ -37,7 +37,7 @@ public class NetSettingView extends SettingView implements OnClickListener,OnChe
     
     public NetSettingView(Context context,LayoutInflater inflater) {
 	mContext = context;
-	proxy = ConnectStateManager.getInstance(((Activity)mContext).getApplication()).getIpcProxy();
+//	proxy = ConnectStateManager.getInstance(((Activity)mContext).getApplication()).getIpcProxy();
 	content = inflater.inflate(R.layout.settings_page_net, null);
 	currentConnectAp = (TextView)content.findViewById(R.id.ap_name);
 	lastConnectIpc = (TextView)content.findViewById(R.id.last_available_ap);

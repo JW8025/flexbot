@@ -195,7 +195,7 @@ public class HudExViewController extends ViewController
     
 //    private LocalBroadcastManager mLocalBroadcastManager;
     
-    private IpcProxy ipcProxy;
+//    private IpcProxy ipcProxy;
     
 //    private boolean isStartRecord = false;
 //    final CustomOnRecordCompleteListener mCustomOnRecordCompleteListener = new CustomOnRecordCompleteListener();
@@ -272,9 +272,9 @@ public class HudExViewController extends ViewController
 		 
 		mainFrameLayout.addView(glView);
 		
-		ConnectStateManager mConnectStateManager = ConnectStateManager
-				.getInstance(HexMiniApplication.sharedApplicaion());
-		ipcProxy = mConnectStateManager.getIpcProxy();
+//		ConnectStateManager mConnectStateManager = ConnectStateManager
+//				.getInstance(HexMiniApplication.sharedApplicaion());
+//		ipcProxy = mConnectStateManager.getIpcProxy();
 		
 //		videoStageSoft = (GLSurfaceView)context.findViewById(R.id.video_bg_soft2);
 //		videoStageHard = (SurfaceView)context.findViewById(R.id.video_bg_hard2);
@@ -457,17 +457,19 @@ public class HudExViewController extends ViewController
 //		else{
 //			aux2Channel.setValue(-1);
 //		}
+		
+		/* 新手模式警告 */
 //		
-	    if (settings.isBeginnerMode()) {	       
-			new AlertDialog.Builder(context)
-			.setIcon(android.R.drawable.ic_dialog_alert).setTitle(R.string.dialog_title_info)
-			.setMessage(R.string.beginner_mode_info)
-			.setPositiveButton(R.string.dialog_btn_ok, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					
-				}
-			}).show();
-	    }
+//	    if (settings.isBeginnerMode()) {	       
+//			new AlertDialog.Builder(context)
+//			.setIcon(android.R.drawable.ic_dialog_alert).setTitle(R.string.dialog_title_info)
+//			.setMessage(R.string.beginner_mode_info)
+//			.setPositiveButton(R.string.dialog_btn_ok, new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int which) {
+//					
+//				}
+//			}).show();
+//	    }
 	    
 //	    initSound();
 //	    initUiControlShow();
@@ -991,8 +993,8 @@ public class HudExViewController extends ViewController
 		
 		deviceOrientationManager.resume();
 		
-		if (ipcProxy != null)
-		    ipcProxy.doStartPreview();
+//		if (ipcProxy != null)
+//		    ipcProxy.doStartPreview();
 	}
 
     //glView onTouch Event handler
